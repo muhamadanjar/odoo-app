@@ -1,29 +1,17 @@
 services:
   odoo:
     image: odoo:17
-    container_name: odoo_17_local_db
-    depends_on:
-      - odoo-web
     ports:
       - "8069:8069"
-      - "8071:8071" # Port untuk Live Chat (opsional)
+      - "8071:8071"
     volumes:
-      # Mapping Folder Custom Addons
       - ./addons:/mnt/extra-addons
-      # Mapping File Konfigurasi
       - ./config/odoo.conf:/etc/odoo/odoo.conf
-      # Mapping Data Filestore (agar attachment/gambar tidak hilang saat restart)
       - ./data:/var/lib/odoo
     environment:
       - HOST=host.docker.internal
-      - USER=odoo_user       # Ganti dengan user DB local Anda
-      - PASSWORD=xcWI3128   # Ganti dengan password DB local Anda
-    # Konfigurasi agar container bisa mengenali 'host.docker.internal' sebagai IP komputer Anda
+      - USER=odoo_user       
+      - PASSWORD=xcWI3128
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
-
-  # (Opsional) Service dummy agar docker tidak komplain jika tidak ada link db
-  odoo-web:
-    image: busybox
-    command: echo "Placeholder for dependencies"
