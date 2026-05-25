@@ -1,16 +1,16 @@
 services:
   odoo:
     image: odoo:17
-    user: "101:101"
+    # user: "101:101"
     ports:
       - "8069:8069"
       - "8071:8071"
     volumes:
       - ./addons:/mnt/extra-addons
       - ./config/odoo.conf:/etc/odoo/odoo.conf
-      # - /bt_odoo_modules:/mnt/btech_modules
+      - /home/anjar/Development/bt_odoo_modules:/mnt/btech_modules
       # - ./data:/var/lib/odoo
-    # for development use
+      # for development use
     command: odoo -u odoo_user --dev=reload,qweb,assets
     extra_hosts:
       - "host.docker.internal:host-gateway"
